@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <bits/stdc++.h>
+#include <limits>
 
 AuthManager::AuthManager()
 {
@@ -57,7 +58,7 @@ void AuthManager::loadUsers()
         getline(ss, email, ',');
         getline(ss, role, ',');
         getline(ss, studentID, ',');
-        getline(ss, password, ',');
+        getline(ss, password);
 
         users.push_back(User(name, email, role, studentID, password));
     }
@@ -95,12 +96,12 @@ void AuthManager::registerUser()
 
     string name, email, password, confirmPassword, studentID, role;
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
     cout << "Name: ";
-    cin.ignore();
     getline(cin, name);
 
     cout << "Email: ";
-    cin.ignore();
     getline(cin, email);
 
     if (roleChoice == 1)
@@ -114,7 +115,8 @@ void AuthManager::registerUser()
             cout << "Only institute email is allowed\n";
 
             cout << "Enter Institute Email: ";
-            cin >> email;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, email);
         }
 
         cout << "Student ID: ";
@@ -188,7 +190,6 @@ void AuthManager::registerUser()
     {
 
         cout << "Password: ";
-        cin.ignore();
         getline(cin, password);
 
         if (!PasswordUtil::validatePassword(password))
@@ -209,9 +210,7 @@ void AuthManager::registerUser()
 
     while (true)
     {
-
         cout << "Confirm Password: ";
-        cin.ignore();
         getline(cin, confirmPassword);
 
         if (confirmPassword != password)
@@ -234,48 +233,72 @@ void AuthManager::registerUser()
 
 bool AuthManager::login()
 {
-
     string name, studentID, password, role;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "\nLogin\n";
 
     cout << "Name: ";
-    cin >> name;
+    getline(cin, name);
 
-    cout << "Role: ";
-    cin >> role;
+    int roleChoice;
+
+    cout << "Select Role:\n";
+    cout << "1 STUDENT\n";
+    cout << "2 FACULTY\n";
+    cout << "3 LIBRARIAN\n";
+    cout << "4 STAFF\n";
+    cout << "Enter choice: ";
+    cin >> roleChoice;
+
+    // clear buffer before getline
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // map choice to role
+    if (roleChoice == 1)
+        role = "STUDENT";
+    else if (roleChoice == 2)
+        role = "FACULTY";
+    else if (roleChoice == 3)
+        role = "LIBRARIAN";
+    else if (roleChoice == 4)
+        role = "STAFF";
+    else
+    {
+        cout << "Invalid role\n";
+        return false;
+    }
 
     if (role == "STUDENT")
     {
-
         cout << "Student ID: ";
-        cin >> studentID;
+        getline(cin, studentID);
     }
     else
     {
 
         studentID = "NA";
     }
-
     cout << "Password: ";
-    cin >> password;
-
-    string hashed = PasswordUtil::hashPassword(password);
+    getline(cin, password);
 
     for (auto &u : users)
     {
-
         if (u.getName() == name &&
             u.getRole() == role &&
             u.getStudentID() == studentID &&
-            u.getPasswordHash() == hashed)
+            PasswordUtil::verifyPassword(password, u.getPasswordHash()))
         {
-
             currentUser = &u;
+
+            // 🔥 TOKEN GENERATION HERE
+            currentToken = tokenManager.generateToken(u.getEmail());
 
             cout << "\nLogin successful\n";
             cout << "Welcome " << u.getName() << endl;
             cout << "Role: " << u.getRole() << endl;
+            cout << "Session Token: " << currentToken << endl;
 
             return true;
         }
@@ -284,4 +307,15 @@ bool AuthManager::login()
     cout << "Invalid credentials\n";
 
     return false;
+}
+
+void AuthManager::logout()
+{
+
+    tokenManager.invalidateToken(currentToken);
+
+    currentUser = nullptr;
+    currentToken = "";
+
+    cout << "Logged out successfully\n";
 }

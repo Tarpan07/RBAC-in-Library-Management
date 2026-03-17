@@ -2,13 +2,11 @@
 #define USER_H
 
 #include <string>
-
 using namespace std;
 
 class User {
 
 private:
-
     string name;
     string email;
     string role;
@@ -16,15 +14,14 @@ private:
     string passwordHash;
 
 public:
+    User(string name, string email, string role, string studentID, string passwordHash);
 
-    User(string name,string email,string role,string studentID,string passwordHash);
-
-    string getName();
-    string getEmail();
-    string getRole();
-    string getStudentID();
-    string getPasswordHash();
-
+    // ✅ const-correct getters
+    const string& getName() const;
+    const string& getEmail() const;
+    const string& getRole() const;
+    const string& getStudentID() const;
+    const string& getPasswordHash() const;
 };
 
 #endif
