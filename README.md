@@ -118,7 +118,7 @@ Login → Token Generated → Access Allowed → Logout → Token Invalidated
 ### 🔧 Compile
 
 ```bash
-g++ *.cpp -o app
+g++ AuthenticationAndSecurity/*.cpp UserInterface/*.cpp -o app
 ```
 
 ### ▶️ Run
