@@ -1,5 +1,6 @@
 #include "AuthManager.h"
 #include "PasswordUtil.h"
+#include "../UserInterface/Dashboard.h"
 
 #include <iostream>
 #include <fstream>
@@ -251,10 +252,8 @@ bool AuthManager::login()
     cout << "Enter choice: ";
     cin >> roleChoice;
 
-    // clear buffer before getline
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    // map choice to role
     if (roleChoice == 1)
         role = "STUDENT";
     else if (roleChoice == 2)
@@ -276,9 +275,9 @@ bool AuthManager::login()
     }
     else
     {
-
         studentID = "NA";
     }
+
     cout << "Password: ";
     getline(cin, password);
 
@@ -291,13 +290,13 @@ bool AuthManager::login()
         {
             currentUser = &u;
 
-            // 🔥 TOKEN GENERATION HERE
+            // 🔥 generate token
             currentToken = tokenManager.generateToken(u.getEmail());
 
             cout << "\nLogin successful\n";
-            cout << "Welcome " << u.getName() << endl;
-            cout << "Role: " << u.getRole() << endl;
-            cout << "Session Token: " << currentToken << endl;
+
+            // 🔥 REDIRECT
+            Dashboard::show(currentUser);
 
             return true;
         }
@@ -317,4 +316,12 @@ void AuthManager::logout()
     currentToken = "";
 
     cout << "Logged out successfully\n";
+}
+
+bool AuthManager::isLoggedIn(){
+    return currentUser != nullptr;
+}
+
+User* AuthManager::getCurrentUser(){
+    return currentUser;
 }

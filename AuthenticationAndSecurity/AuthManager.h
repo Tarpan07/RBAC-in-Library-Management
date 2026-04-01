@@ -32,6 +32,9 @@ public:
     bool login();
 
     void logout();   // optional but recommended
+
+    bool isLoggedIn();
+    User* getCurrentUser();
 };
 
 #endif
