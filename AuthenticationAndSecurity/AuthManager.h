@@ -30,6 +30,7 @@ public:
 
     void registerUser();
     bool login();
+    string getToken();
 
     void logout();   // optional but recommended
 

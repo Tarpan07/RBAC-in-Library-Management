@@ -5,7 +5,7 @@
 
 class Dashboard {
 public:
-    static void show(User* user);
+    static void show(User* user, string token);
 };
 
 #endif

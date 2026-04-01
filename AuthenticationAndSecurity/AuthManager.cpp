@@ -295,8 +295,7 @@ bool AuthManager::login()
 
             cout << "\nLogin successful\n";
 
-            // 🔥 REDIRECT
-            Dashboard::show(currentUser);
+
 
             return true;
         }
@@ -324,4 +323,8 @@ bool AuthManager::isLoggedIn(){
 
 User* AuthManager::getCurrentUser(){
     return currentUser;
+}
+
+string AuthManager::getToken(){
+    return currentToken;
 }

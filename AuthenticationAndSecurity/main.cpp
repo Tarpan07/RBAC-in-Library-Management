@@ -42,7 +42,7 @@ int main(){
 
         else{
 
-            Dashboard::show(auth.getCurrentUser());
+            Dashboard::show(auth.getCurrentUser(), auth.getToken());
 
             cout<<"\n1 Logout\n";
             cout<<"2 Exit\n";
