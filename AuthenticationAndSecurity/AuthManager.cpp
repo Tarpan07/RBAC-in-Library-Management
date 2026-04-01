@@ -115,12 +115,11 @@ void AuthManager::registerUser()
             cout << "Only institute email is allowed\n";
 
             cout << "Enter Institute Email: ";
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             getline(cin, email);
         }
 
         cout << "Student ID: ";
-        cin >> studentID;
+        getline(cin, studentID);
     }
     else if (roleChoice == 2)
     {
