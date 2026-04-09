@@ -4,62 +4,72 @@
 
 using namespace std;
 
-int main(){
+int main()
+{
 
     AuthManager auth;
     int choice;
 
-    while(true){
+    while (true)
+    {
 
-        // 🔥 IF NOT LOGGED IN → show login/signup menu
-        if(!auth.isLoggedIn()){
+        // 🔹 NOT LOGGED IN → Show Auth Menu
+        if (!auth.isLoggedIn())
+        {
 
-            cout<<"\n===== Library System =====\n";
+            cout << "\n===== Library System =====\n";
+            cout << "1. Login\n";
+            cout << "2. Sign Up\n";
+            cout << "3. Exit\n";
 
-            cout<<"1 Login\n";
-            cout<<"2 Sign Up\n";
-            cout<<"3 Exit\n";
+            cout << "Enter choice: ";
+            cin >> choice;
 
-            cin>>choice;
-
-            if(choice==1){
+            switch (choice)
+            {
+            case 1:
                 auth.login();
-            }
-
-            else if(choice==2){
-                auth.registerUser();
-            }
-
-            else if(choice==3){
-                cout<<"Exiting system\n";
                 break;
-            }
 
-            else{
-                cout<<"Invalid choice\n";
+            case 2:
+                auth.registerUser();
+                break;
+
+            case 3:
+                cout << "Exiting system...\n";
+                return 0;
+
+            default:
+                cout << "Invalid choice\n";
             }
         }
 
-        else{
+        // 🔹 LOGGED IN → Show Dashboard
+        else
+        {
 
+            // 🔥 RBAC is handled INSIDE Dashboard
             Dashboard::show(auth.getCurrentUser(), auth.getToken());
 
-            cout<<"\n1 Logout\n";
-            cout<<"2 Exit\n";
+            cout << "\n1. Logout\n";
+            cout << "2. Exit\n";
 
-            cin>>choice;
+            cout << "Enter choice: ";
+            cin >> choice;
 
-            if(choice==1){
+            switch (choice)
+            {
+            case 1:
                 auth.logout();
-            }
-
-            else if(choice==2){
-                cout<<"Exiting system\n";
+                cout << "Logged out successfully\n";
                 break;
-            }
 
-            else{
-                cout<<"Invalid choice\n";
+            case 2:
+                cout << "Exiting system...\n";
+                return 0;
+
+            default:
+                cout << "Invalid choice\n";
             }
         }
     }
