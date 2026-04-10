@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// 🔐 Generate random token
+//  Generate random token
 string generateRandomToken() {
     static const char charset[] =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -20,7 +20,7 @@ string generateRandomToken() {
     return token;
 }
 
-// ✅ Create session + token
+//  Create session + token
 string TokenManager::generateToken(const string& email) {
     string token = generateRandomToken();
 
@@ -33,7 +33,7 @@ string TokenManager::generateToken(const string& email) {
     return token;
 }
 
-// ✅ Validate token
+// Validate token
 bool TokenManager::validateToken(const string& token) {
     if (sessions.find(token) == sessions.end())
         return false;
@@ -47,7 +47,7 @@ bool TokenManager::validateToken(const string& token) {
     return true;
 }
 
-// ✅ Get email from token
+//  Get email from token
 string TokenManager::getEmailFromToken(const string& token) {
     if (validateToken(token))
         return sessions[token].email;
@@ -55,7 +55,7 @@ string TokenManager::getEmailFromToken(const string& token) {
     return "";
 }
 
-// ✅ Logout (invalidate token)
+//  Logout (invalidate token)
 void TokenManager::invalidateToken(const string& token) {
     sessions.erase(token);
 }

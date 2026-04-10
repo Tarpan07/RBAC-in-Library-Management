@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// 🧾 Session structure
+//  Session structure
 struct Session {
     string email;
     time_t expiry;

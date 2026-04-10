@@ -12,8 +12,6 @@ int main()
 
     while (true)
     {
-
-        // 🔹 NOT LOGGED IN → Show Auth Menu
         if (!auth.isLoggedIn())
         {
 
@@ -44,11 +42,8 @@ int main()
             }
         }
 
-        // 🔹 LOGGED IN → Show Dashboard
         else
         {
-
-            // 🔥 RBAC is handled INSIDE Dashboard
             Dashboard::show(auth.getCurrentUser(), auth.getToken());
 
             cout << "\n1. Logout\n";

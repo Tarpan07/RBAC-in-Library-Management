@@ -8,17 +8,18 @@
 
 using namespace std;
 
-class AuthManager {
+class AuthManager
+{
 
 private:
     vector<User> users;
-    User* currentUser;
+    User *currentUser;
 
     vector<string> librarianEmails;
     vector<string> staffEmails;
 
-    TokenManager tokenManager;   // ✅ added here
-    string currentToken;         // ✅ added here
+    TokenManager tokenManager; //  added here
+    string currentToken;       //  added here
 
     void saveUsers();
     void loadUsers();
@@ -32,10 +33,10 @@ public:
     bool login();
     string getToken();
 
-    void logout();   // optional but recommended
+    void logout(); // optional but recommended
 
     bool isLoggedIn();
-    User* getCurrentUser();
+    User *getCurrentUser();
 };
 
 #endif

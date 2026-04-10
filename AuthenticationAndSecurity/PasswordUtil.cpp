@@ -5,7 +5,6 @@
 
 using namespace std;
 
-// 🔐 Generate random salt
 string generateSalt() {
     static const char charset[] =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -22,7 +21,6 @@ string generateSalt() {
     return salt;
 }
 
-// 🔐 Hash password with salt
 string PasswordUtil::hashPassword(string password) {
 
     string salt = generateSalt();
@@ -32,16 +30,12 @@ string PasswordUtil::hashPassword(string password) {
 
     size_t hashed = hasher(combined);
 
-    // 🔁 Multiple iterations (basic strengthening)
     for (int i = 0; i < 1000; i++) {
         hashed = hasher(to_string(hashed));
     }
-
-    // 🔥 Store salt + hash
     return salt + ":" + to_string(hashed);
 }
 
-// 🔐 Verify password
 bool PasswordUtil::verifyPassword(string inputPassword, string storedHash) {
 
     int pos = storedHash.find(":");
@@ -62,7 +56,6 @@ bool PasswordUtil::verifyPassword(string inputPassword, string storedHash) {
     return to_string(hashed) == hashValue;
 }
 
-// 🔐 Validate password strength
 bool PasswordUtil::validatePassword(string password) {
 
     bool hasUpper = false;

@@ -4,7 +4,7 @@
 #include <sstream>
 using namespace std;
 
-// ✅ Save new user to file
+//  Save new user to file
 bool UserRepository::saveUser(const User& user) {
     ofstream file("users.txt", ios::app);
     if (!file) return false;
@@ -19,7 +19,7 @@ bool UserRepository::saveUser(const User& user) {
     return true;
 }
 
-// ✅ Find user by email (used for login)
+//  Find user by email (used for login)
 User* UserRepository::findByEmail(const string& email) {
     ifstream file("users.txt");
     if (!file) return nullptr;
@@ -47,7 +47,7 @@ User* UserRepository::findByEmail(const string& email) {
     return nullptr;
 }
 
-// ✅ Get all users (useful for admin/debug)
+//  Get all users (useful for admin/debug)
 vector<User> UserRepository::getAllUsers() {
     vector<User> users;
 
@@ -74,7 +74,7 @@ vector<User> UserRepository::getAllUsers() {
     return users;
 }
 
-// ✅ Check if email already exists (for registration)
+//  Check if email already exists (for registration)
 bool UserRepository::emailExists(const string& email) {
     ifstream file("users.txt");
     if (!file) return false;

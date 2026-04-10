@@ -290,12 +290,10 @@ bool AuthManager::login()
         {
             currentUser = &u;
 
-            // 🔥 generate token
+            // generate token
             currentToken = tokenManager.generateToken(u.getEmail());
 
             cout << "\nLogin successful\n";
-
-
 
             return true;
         }
@@ -317,14 +315,17 @@ void AuthManager::logout()
     cout << "Logged out successfully\n";
 }
 
-bool AuthManager::isLoggedIn(){
+bool AuthManager::isLoggedIn()
+{
     return currentUser != nullptr;
 }
 
-User* AuthManager::getCurrentUser(){
+User *AuthManager::getCurrentUser()
+{
     return currentUser;
 }
 
-string AuthManager::getToken(){
+string AuthManager::getToken()
+{
     return currentToken;
 }

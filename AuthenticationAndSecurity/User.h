@@ -16,7 +16,6 @@ private:
 public:
     User(string name, string email, string role, string studentID, string passwordHash);
 
-    // ✅ const-correct getters
     const string& getName() const;
     const string& getEmail() const;
     const string& getRole() const;
