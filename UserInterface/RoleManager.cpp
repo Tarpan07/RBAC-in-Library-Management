@@ -1,8 +1,9 @@
 #include "RoleManager.h"
 
-void RoleManager::initializeRoles() {
+void RoleManager::initializeRoles()
+{
 
-    Role student("Student");
+    Role student("STUDENT");
     student.addPermission(Permission("SEARCH_BOOK"));
     student.addPermission(Permission("VIEW_ALL_BOOKS"));
     student.addPermission(Permission("ISSUE_BOOK"));
@@ -10,14 +11,14 @@ void RoleManager::initializeRoles() {
 
     Role faculty = student;
 
-    Role staff("Staff");
+    Role staff("STAFF");
     staff.addPermission(Permission("SEARCH_BOOK"));
     staff.addPermission(Permission("VIEW_ALL_BOOKS"));
     staff.addPermission(Permission("ISSUE_BOOK"));
     staff.addPermission(Permission("RETURN_BOOK"));
     staff.addPermission(Permission("UPDATE_BOOK"));
 
-    Role librarian("Librarian");
+    Role librarian("LIBRARIAN");
     librarian.addPermission(Permission("ADD_BOOK"));
     librarian.addPermission(Permission("DELETE_BOOK"));
     librarian.addPermission(Permission("UPDATE_BOOK"));
@@ -27,13 +28,14 @@ void RoleManager::initializeRoles() {
     librarian.addPermission(Permission("RETURN_BOOK"));
     librarian.addPermission(Permission("UPDATE_USER"));
 
-    roleMap["Student"] = student;
-    roleMap["Faculty"] = faculty;
-    roleMap["Staff"] = staff;
-    roleMap["Librarian"] = librarian;
+    roleMap["STUDENT"] = student;
+    roleMap["FACULTY"] = faculty;
+    roleMap["STAFF"] = staff;
+    roleMap["LIBRARIAN"] = librarian;
 }
 
-Role* RoleManager::getRole(string roleName) {
+Role *RoleManager::getRole(string roleName)
+{
     if (roleMap.find(roleName) != roleMap.end())
         return &roleMap[roleName];
     return nullptr;

@@ -2,85 +2,85 @@
 #include "PermissionEngine.h"
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
-void Dashboard::show(User *user, string token)
-{
+void Dashboard::show(User* user, string token) {
 
     PermissionEngine engine;
-    int choice;
 
-    while (true)
-    {
+    while (true) {
+
         cout << "\n===== DASHBOARD =====\n";
-        cout << "1. Add Book\n";
-        cout << "2. Delete Book\n";
-        cout << "3. Update Book\n";
-        cout << "4. Issue Book\n";
-        cout << "5. Return Book\n";
-        cout << "6. Search Book\n";
-        cout << "7. Update User\n";
+        cout << "Role: " << user->getRole() << endl;
+
+        vector<pair<int, string>> menu;
+        int option = 1;
+
+        if (engine.checkAccess(*user, "ADD_BOOK")) {
+            cout << option << ". Add Book\n";
+            menu.push_back({option++, "ADD_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "DELETE_BOOK")) {
+            cout << option << ". Delete Book\n";
+            menu.push_back({option++, "DELETE_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "UPDATE_BOOK")) {
+            cout << option << ". Update Book\n";
+            menu.push_back({option++, "UPDATE_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "ISSUE_BOOK")) {
+            cout << option << ". Issue Book\n";
+            menu.push_back({option++, "ISSUE_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "RETURN_BOOK")) {
+            cout << option << ". Return Book\n";
+            menu.push_back({option++, "RETURN_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "SEARCH_BOOK")) {
+            cout << option << ". Search Book\n";
+            menu.push_back({option++, "SEARCH_BOOK"});
+        }
+
+        if (engine.checkAccess(*user, "UPDATE_USER")) {
+            cout << option << ". Update User\n";
+            menu.push_back({option++, "UPDATE_USER"});
+        }
+
         cout << "0. Exit\n";
 
+        int choice;
         cout << "Enter choice: ";
         cin >> choice;
 
-        if (choice == 0)
-            break;
+        if (choice == 0) break;
 
-        switch (choice)
-        {
+        bool found = false;
 
-        case 1:
-            if (engine.checkAccess(*user, "ADD_BOOK"))
-                cout << "Book Added\n";
-            else
-                cout << "Access Denied\n";
-            break;
+        for (auto &item : menu) {
+            if (item.first == choice) {
 
-        case 2:
-            if (engine.checkAccess(*user, "DELETE_BOOK"))
-                cout << "Book Deleted\n";
-            else
-                cout << "Access Denied\n";
-            break;
+                found = true;
+                string action = item.second;
 
-        case 3:
-            if (engine.checkAccess(*user, "UPDATE_BOOK"))
-                cout << "Book Updated\n";
-            else
-                cout << "Access Denied\n";
-            break;
+                if (action == "ADD_BOOK") cout << "Book Added\n";
+                else if (action == "DELETE_BOOK") cout << "Book Deleted\n";
+                else if (action == "UPDATE_BOOK") cout << "Book Updated\n";
+                else if (action == "ISSUE_BOOK") cout << "Book Issued\n";
+                else if (action == "RETURN_BOOK") cout << "Book Returned\n";
+                else if (action == "SEARCH_BOOK") cout << "Searching Book...\n";
+                else if (action == "UPDATE_USER") cout << "User Updated\n";
 
-        case 4:
-            if (engine.checkAccess(*user, "ISSUE_BOOK"))
-                cout << "Book Issued\n";
-            else
-                cout << "Access Denied\n";
-            break;
+                break;
+            }
+        }
 
-        case 5:
-            if (engine.checkAccess(*user, "RETURN_BOOK"))
-                cout << "Book Returned\n";
-            else
-                cout << "Access Denied\n";
-            break;
-
-        case 6:
-            if (engine.checkAccess(*user, "SEARCH_BOOK"))
-                cout << "Searching Book...\n";
-            else
-                cout << "Access Denied\n";
-            break;
-
-        case 7:
-            if (engine.checkAccess(*user, "UPDATE_USER"))
-                cout << "User Updated\n";
-            else
-                cout << "Access Denied\n";
-            break;
-
-        default:
+        if (!found) {
             cout << "Invalid choice\n";
         }
     }
